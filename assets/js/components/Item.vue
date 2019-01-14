@@ -4,6 +4,7 @@
       <img :src="image" :alt="name" class="card-img-top">
       <div class="card-body">
         <h4 class="card-title">{{ name }}</h4>
+        
         <div class="card-text">{{ price | dollars }}</div>
         <div class="row justify-content-end">
           <button class="btn btn-primary" @click="addToCart(invId)">Add to cart</button>
