@@ -17,24 +17,24 @@ class Product
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=52, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="decimal",scale=2, precision=10, nullable=true)
-     */
-    private $price;
-
-    /**
-     * @ORM\Column(type="string", nullable=true, length=511)
+     * @ORM\Column(type="string", length=511, nullable=true)
      */
     private $image_url;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $price;
 
     public function getId(): ?int
     {
@@ -77,15 +77,15 @@ class Product
         return $this;
     }
 
-    public function setPrice(?decimal $price): self
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function setPrice($price): self
     {
         $this->price = $price;
 
         return $this;
-    }
-
-    public function getPrice()
-    {
-        return $this->price;
     }
 }
