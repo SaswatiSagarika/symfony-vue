@@ -1,1 +1,1 @@
-web: php -S localhost:9030 -t public
+web: vendor/bin/heroku-php-apache2
