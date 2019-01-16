@@ -83,6 +83,9 @@
     "fig/link-util": {
         "version": "1.0.0"
     },
+    "heroku/heroku-buildpack-php": {
+        "version": "dev-master"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
