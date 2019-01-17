@@ -10,6 +10,7 @@
 namespace App\Service;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use DOMDocument;
 
 class ProductService
@@ -18,17 +19,23 @@ class ProductService
     /**
      * @var Registry
      */
-    protected $doctrine;
+    private $doctrine;
+
+    /**
+     *  @var string
+     */
+    private $mailer;
     
     /**
      * @param Registry $doctrine
+     * @param String $dataDir
      *
      * @return void
-     */
-    
-    public function __construct(Registry $doctrine)
+     */    
+    public function __construct(Registry $doctrine, $dataDir)
     {
         $this->doctrine = $doctrine;
+        $this->dataDir = $dataDir;
     }  
     
     /**
@@ -71,5 +78,16 @@ class ProductService
         }
         
         return $resultArray;
+    }
+
+     /**
+     * Private function to get products
+     *
+     * @param $sheet    obejct(PHPExcel_Worksheet)
+     *
+     * @return array
+     */
+    public function uploadProduct($sheet) {
+        print_r($sheet);exit();
     }
 }

@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    dataDir: '%kernel.root_dir%/../public'
 
 services:
     # default configuration for services in *this* file
@@ -30,4 +31,4 @@ services:
     app.service.product:
         class: App\Service\ProductService
         public: true
-        arguments: ["@doctrine"]
+        arguments: ["@doctrine", "%dataDir%"]

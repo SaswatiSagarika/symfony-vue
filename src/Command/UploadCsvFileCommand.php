@@ -43,11 +43,13 @@ class UploadCsvFileCommand extends ContainerAwareCommand
     {   
         $container = $this->getContainer();
         $csvFile = $input->getArgument('csv_file');
+
         $ext = pathinfo($csvFile, PATHINFO_EXTENSION);
+
         //check if the file extension is csv or not
         if($ext === 'csv')
         {   //calling the uploadUsers function
-            $status = $container->get('sch_main.import_csv')->uploadUsers($csvFile);
+            $status = $container->get('app.service.product')->uploadProduct($csvFile);
         }
         else
         {
