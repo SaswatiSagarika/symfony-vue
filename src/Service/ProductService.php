@@ -24,7 +24,7 @@ class ProductService
     /**
      *  @var string
      */
-    private $mailer;
+    private $dataDir;
     
     /**
      * @param Registry $doctrine
@@ -88,6 +88,6 @@ class ProductService
      * @return array
      */
     public function uploadProduct($sheet) {
-        print_r($sheet);exit();
+        print_r($dataDir);exit();
     }
 }
