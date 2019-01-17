@@ -88,6 +88,14 @@ class ProductService
      * @return array
      */
     public function uploadProduct($sheet) {
-        print_r($dataDir);exit();
+        
+        $filePath= $this->dataDir.$sheet;
+        //read the xlsx sheet
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($filePath);
+        print_r($spreadsheet);exit;
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        $count = count($sheetData);
     }
 }
