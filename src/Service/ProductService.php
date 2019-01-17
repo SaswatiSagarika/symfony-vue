@@ -12,6 +12,7 @@ namespace App\Service;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use App\Entity\Product;
+use League\Csv\Reader;
 use DOMDocument;
 
 class ProductService
@@ -89,23 +90,33 @@ class ProductService
      * @return array
      */
     public function uploadProduct($sheet) {
-        
-        $filePath= $this->dataDir.'/uploads/'.$sheet;
+
+        try {
+            $filePath= $this->dataDir.$sheet;
         //read the xlsx sheet
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-        $reader->setReadDataOnly(true);
-        $spreadsheet = $reader->load($filePath);        
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
-        $count = count($sheetData);
         
-        $product = new Product;
-        for ($i =2; $i<= $count; $i++) {
-            print_r($spreadsheet[0]);exit();
-           $product->setName($sheet->setCellValue('B'.$id, $spreadsheet[0]))
-                   ->setDescription($sheet->setCellValue('C'.$id, $spreadsheet[0]))
-                   ->setSKU($sheet->setCellValue('E'.$id, $spreadsheet[0]))
-                   ->setImageUrl($sheet->setCellValue('F'.$id, $spreadsheet[0]))
-                   ->setPrice($sheet->setCellValue('D'.$id, $spreadsheet[0]));
+            $em = $this->doctrine->getEntityManager();
+            $reader=Reader::createFromPath($filePath);
+             //get Iterator of all rows
+            $results = $reader->fetchAssoc();
+            foreach ($results as $row) {
+                $product = new Product;
+                $product->setName($row['name'])
+                    ->setDescription($row['description'])
+                    ->setSKU($row['sku'])
+                    ->setPrice($row['price'])
+                    ->setImageUrl($row['image_url']);
+                $em->persist($product);
+            }
+
+            $em->flush();
+            $returnData['message'] ="uploaded ";
+        } catch (\Exception $e) {
+            $returnData['errorMessage'] = $e->getMessage();
         }
+        
+        return $resultArray;
+        
+        
     }
 }
