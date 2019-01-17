@@ -11,6 +11,7 @@ namespace App\Service;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use App\Entity\Product;
 use DOMDocument;
 
 class ProductService
@@ -89,13 +90,22 @@ class ProductService
      */
     public function uploadProduct($sheet) {
         
-        $filePath= $this->dataDir.$sheet;
+        $filePath= $this->dataDir.'/uploads/'.$sheet;
         //read the xlsx sheet
         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
         $reader->setReadDataOnly(true);
-        $spreadsheet = $reader->load($filePath);
-        print_r($spreadsheet);exit;
+        $spreadsheet = $reader->load($filePath);        
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
         $count = count($sheetData);
+        
+        $product = new Product;
+        for ($i =2; $i<= $count; $i++) {
+            print_r($spreadsheet[0]);exit();
+           $product->setName($sheet->setCellValue('B'.$id, $spreadsheet[0]))
+                   ->setDescription($sheet->setCellValue('C'.$id, $spreadsheet[0]))
+                   ->setSKU($sheet->setCellValue('E'.$id, $spreadsheet[0]))
+                   ->setImageUrl($sheet->setCellValue('F'.$id, $spreadsheet[0]))
+                   ->setPrice($sheet->setCellValue('D'.$id, $spreadsheet[0]));
+        }
     }
 }

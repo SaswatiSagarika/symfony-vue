@@ -27,6 +27,11 @@ class Product
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=10, nullable=true, unique=true)
+     */
+    private $sku;
+
+    /**
      * @ORM\Column(type="string", length=511, nullable=true)
      */
     private $image_url;
@@ -61,6 +66,18 @@ class Product
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getSKU(): ?string
+    {
+        return $this->sku;
+    }
+
+    public function setSKU(?string $sku): self
+    {
+        $this->sku = $sku;
 
         return $this;
     }
