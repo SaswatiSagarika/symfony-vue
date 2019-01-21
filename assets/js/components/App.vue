@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import Item from './Item.vue';
-import ShoppingCart from './ShoppingCart.vue';
+import Item from './components/Item.vue';
+import ShoppingCart from './components/ShoppingCart.vue';
 
 export default {
   name: 'app',

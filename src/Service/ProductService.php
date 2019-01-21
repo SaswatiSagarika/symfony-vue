@@ -92,14 +92,16 @@ class ProductService
     public function uploadProduct($sheet) {
 
         try {
-            $filePath= $this->dataDir.$sheet;
+            $filePath= $this->dataDir.'/uploads/'.$sheet;
         //read the xlsx sheet
         
             $em = $this->doctrine->getEntityManager();
             $reader=Reader::createFromPath($filePath);
              //get Iterator of all rows
-            $results = $reader->fetchAssoc();
+            $reader->setHeaderOffset(0);
+            $results = $reader->getRecords(['id','name','description','price','sku','image_url']);
             foreach ($results as $row) {
+                
                 $product = new Product;
                 $product->setName($row['name'])
                     ->setDescription($row['description'])
@@ -115,7 +117,7 @@ class ProductService
             $returnData['errorMessage'] = $e->getMessage();
         }
         
-        return $resultArray;
+        return $returnData;
         
         
     }
